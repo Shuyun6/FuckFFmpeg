@@ -3,10 +3,10 @@
 //
 #include <jni.h>
 #include <string>
-#include <libswscale/swscale.h>
 
 extern "C" {
 #include <libavcodec/avcodec.h>
+#include <libswscale/swscale.h>
 }
 
 extern "C"
@@ -16,7 +16,6 @@ Java_shuyun_fuckffmpeg_Fucker_getMsg(JNIEnv *env, jobject instance) {
     // TODO
     char msg[1024] = {};
     sprintf(msg, "%s", avcodec_configuration());
-
     return env->NewStringUTF(msg);
 }
 
