@@ -53,6 +53,10 @@ set_target_properties(avutil
   PROPERTIES IMPORTED_LOCATION
   ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libavutil.so)
 
+add_library(libfdk SHARED IMPORTED)
+set_target_properties(libfdk
+  PROPERTIES IMPORTED_LOCATION
+  ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libfdk-aac.so)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -79,6 +83,7 @@ target_link_libraries( # Specifies the target library.
                        avformat
                        avutil
                        swscale
+                       libfdk
                        # Links the target library to the log library
                        # included in the NDK.
                        ${log-lib} )

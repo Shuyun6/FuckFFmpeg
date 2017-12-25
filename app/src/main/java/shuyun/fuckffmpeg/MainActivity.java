@@ -2,9 +2,14 @@ package shuyun.fuckffmpeg;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    static{
+        System.loadLibrary("FuckFFmpeg-lib");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,7 +18,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(new Fucker().getMsg());
+        try{
+
+            tv.setText(new Fucker().getMsg());
+        }catch(Exception e){
+            Log.e("test", e.getMessage());
+        }
     }
 
 }
