@@ -11,19 +11,17 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("FuckFFmpeg-lib");
     }
 
+    private Fucker fucker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fucker = new Fucker();
 
-        // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
-        try{
+        tv.setText(fucker.getConfiguration());
 
-            tv.setText(new Fucker().getMsg());
-        }catch(Exception e){
-            Log.e("test", e.getMessage());
-        }
     }
 
 }

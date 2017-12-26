@@ -14,8 +14,6 @@ public class Fucker {
 
     }
 
-    public native String getMsg();
-
-    public native void YUYV422TONV21(byte[] yuyv422, byte[] nv21, int width, int height);
+    public native String getConfiguration();
 
 }

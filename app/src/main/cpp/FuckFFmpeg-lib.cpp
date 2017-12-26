@@ -10,12 +10,10 @@ extern "C" {
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_shuyun_fuckffmpeg_Fucker_getMsg(JNIEnv *env, jobject instance) {
+Java_shuyun_fuckffmpeg_Fucker_getConfiguration(JNIEnv *env, jobject instance) {
 
     // TODO
-    char msg[1024*8] = {};
-    sprintf(msg, "%s", avcodec_configuration());
-    return env->NewStringUTF(msg);
+    return env->NewStringUTF(avcodec_configuration());
 }
 
 
