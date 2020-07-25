@@ -30,7 +30,8 @@ add_library( libmp3lame
 
 add_library( native-lib
         SHARED
-        native-lib.cpp )
+        native-lib.cpp
+        Mp3Encoder.cpp)
 
 find_library( log-lib log )
 
