@@ -15,6 +15,7 @@ android {
 
         externalNativeBuild {
             cmake {
+                cFlags "-DSTDC_HEADERS"
                 cppFlags ""
             }
         }
