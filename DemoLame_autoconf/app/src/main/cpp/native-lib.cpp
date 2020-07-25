@@ -8,8 +8,7 @@ extern "C" JNIEXPORT jstring JNICALL
 Java_com_shuyun_demolame_MainActivity_stringFromJNI(
         JNIEnv* env,
         jobject /* this */) {
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
+    return env->NewStringUTF(get_lame_version());
 }
 
 class Mp3Encoder {
