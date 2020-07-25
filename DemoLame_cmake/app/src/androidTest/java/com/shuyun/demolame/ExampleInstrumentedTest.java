@@ -1,4 +1,4 @@
-package com.shuyun.demolame_cmake;
+package com.shuyun.demolame;
 
 import android.content.Context;
 
