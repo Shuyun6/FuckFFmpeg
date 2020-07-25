@@ -15,8 +15,11 @@ android {
 
         externalNativeBuild {
             cmake {
-                cppFlags ""
+                cppFlags "-DSTDC_HEADERS"
             }
+        }
+        ndk{
+            abiFilters 'armeabi-v7a'
         }
     }
 
