@@ -5,40 +5,410 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
-# Creates and names a library, sets it as either STATIC
-# or SHARED, and provides the relative paths to its source code.
-# You can define multiple libraries, and CMake builds them for you.
-# Gradle automatically packages shared libraries with your APK.
+include_directories(libSYS/include/)
+include_directories(libFDK/include/)
+include_directories(libAACenc/include/)
+include_directories(libAACdec/include/)
+include_directories(libMpegTPEnc/include/)
+include_directories(libMpegTPDec/include/)
+include_directories(libSBRenc/include/)
+include_directories(libSBRdec/include/)
+include_directories(libSACenc/include/)
+include_directories(libSACdec/include/)
+include_directories(libPCMutils/include/)
+include_directories(libArithCoding/include/)
+include_directories(libDRCdec/include/)
 
-add_library( # Sets the name of the library.
-             native-lib
+add_library( native-lib SHARED native-lib.cpp )
+find_library( log-lib log )
 
-             # Sets the library as a shared library.
-             SHARED
+set(SYS_SRC
+        libSYS/include/genericStds.h
+        libSYS/src/genericStds.cpp
+        libSYS/src/syslib_channelMapDescr.cpp)
 
-             # Provides a relative path to your source file(s).
-             native-lib.cpp )
+set(FDK_SRC
+        libFDK/src/dct.cpp
+        libFDK/src/autocorr2nd.cpp
+        libFDK/src/FDK_bitbuffer.cpp
+        libFDK/src/FDK_core.cpp
+        libFDK/src/FDK_crc.cpp
+        libFDK/src/FDK_decorrelate.cpp
+        libFDK/src/FDK_hybrid.cpp
+        libFDK/src/FDK_lpc.cpp
+        libFDK/src/FDK_matrixCalloc.cpp
+        libFDK/src/FDK_qmf_domain.cpp
+        libFDK/src/FDK_tools_rom.cpp
+        libFDK/src/FDK_trigFcts.cpp
+        libFDK/src/fft.cpp
+        libFDK/src/fft_rad2.cpp
+        libFDK/src/fixpoint_math.cpp
+        libFDK/src/huff_nodes.cpp
+        libFDK/src/mdct.cpp
+        libFDK/src/nlc_dec.cpp
+        libFDK/src/qmf.cpp
+        libFDK/src/scale.cpp
+        )
 
-# Searches for a specified prebuilt library and stores the path as a
-# variable. Because CMake includes system libraries in the search path by
-# default, you only need to specify the name of the public NDK library
-# you want to add. CMake verifies that the library exists before
-# completing its build.
+set(AACenc_SRC
+        libAACenc/src/aacenc.cpp
+        libAACenc/src/aacenc.h
+        libAACenc/src/aacenc_lib.cpp
+        libAACenc/src/aacenc_pns.cpp
+        libAACenc/src/aacenc_pns.h
+        libAACenc/src/aacEnc_ram.cpp
+        libAACenc/src/aacEnc_ram.h
+        libAACenc/src/aacEnc_rom.cpp
+        libAACenc/src/aacEnc_rom.h
+        libAACenc/src/aacenc_tns.cpp
+        libAACenc/src/aacenc_tns.h
+        libAACenc/src/adj_thr.cpp
+        libAACenc/src/adj_thr.h
+        libAACenc/src/adj_thr_data.h
+        libAACenc/src/band_nrg.cpp
+        libAACenc/src/band_nrg.h
+        libAACenc/src/bandwidth.cpp
+        libAACenc/src/bandwidth.h
+        libAACenc/src/bit_cnt.cpp
+        libAACenc/src/bit_cnt.h
+        libAACenc/src/bitenc.cpp
+        libAACenc/src/bitenc.h
+        libAACenc/src/block_switch.cpp
+        libAACenc/src/block_switch.h
+        libAACenc/src/channel_map.cpp
+        libAACenc/src/channel_map.h
+        libAACenc/src/chaosmeasure.cpp
+        libAACenc/src/chaosmeasure.h
+        libAACenc/src/dyn_bits.cpp
+        libAACenc/src/dyn_bits.h
+        libAACenc/src/grp_data.cpp
+        libAACenc/src/grp_data.h
+        libAACenc/src/intensity.cpp
+        libAACenc/src/intensity.h
+        libAACenc/src/interface.h
+        libAACenc/src/line_pe.cpp
+        libAACenc/src/line_pe.h
+        libAACenc/src/metadata_compressor.cpp
+        libAACenc/src/metadata_compressor.h
+        libAACenc/src/metadata_main.cpp
+        libAACenc/src/metadata_main.h
+        libAACenc/src/mps_main.cpp
+        libAACenc/src/mps_main.h
+        libAACenc/src/ms_stereo.cpp
+        libAACenc/src/ms_stereo.h
+        libAACenc/src/noisedet.cpp
+        libAACenc/src/noisedet.h
+        libAACenc/src/pns_func.h
+        libAACenc/src/pnsparam.cpp
+        libAACenc/src/pnsparam.h
+        libAACenc/src/pre_echo_control.cpp
+        libAACenc/src/pre_echo_control.h
+        libAACenc/src/psy_configuration.cpp
+        libAACenc/src/psy_configuration.h
+        libAACenc/src/psy_const.h
+        libAACenc/src/psy_data.h
+        libAACenc/src/psy_main.cpp
+        libAACenc/src/psy_main.h
+        libAACenc/src/qc_data.h
+        libAACenc/src/qc_main.cpp
+        libAACenc/src/qc_main.h
+        libAACenc/src/quantize.cpp
+        libAACenc/src/quantize.h
+        libAACenc/src/sf_estim.cpp
+        libAACenc/src/sf_estim.h
+        libAACenc/src/spreading.cpp
+        libAACenc/src/spreading.h
+        libAACenc/src/tns_func.h
+        libAACenc/src/tonality.cpp
+        libAACenc/src/tonality.h
+        libAACenc/src/transform.cpp
+        libAACenc/src/transform.h
+        )
 
-find_library( # Sets the name of the path variable.
-              log-lib
+set(AACdec_SRC
+        libAACdec/src/aac_ram.cpp
+        libAACdec/src/aac_ram.h
+        libAACdec/src/aac_rom.cpp
+        libAACdec/src/aac_rom.h
+        libAACdec/src/aacdec_drc.cpp
+        libAACdec/src/aacdec_drc.h
+        libAACdec/src/aacdec_drc_types.h
+        libAACdec/src/aacdec_hcr.cpp
+        libAACdec/src/aacdec_hcr.h
+        libAACdec/src/aacdec_hcr_bit.cpp
+        libAACdec/src/aacdec_hcr_bit.h
+        libAACdec/src/aacdec_hcr_types.h
+        libAACdec/src/aacdec_hcrs.cpp
+        libAACdec/src/aacdec_hcrs.h
+        libAACdec/src/aacdec_pns.cpp
+        libAACdec/src/aacdec_pns.h
+        libAACdec/src/aacdec_tns.cpp
+        libAACdec/src/aacdec_tns.h
+        libAACdec/src/aacdecoder.cpp
+        libAACdec/src/aacdecoder.h
+        libAACdec/src/aacdecoder_lib.cpp
+        libAACdec/src/block.cpp
+        libAACdec/src/block.h
+        libAACdec/src/channel.cpp
+        libAACdec/src/channel.h
+        libAACdec/src/channelinfo.cpp
+        libAACdec/src/channelinfo.h
+        libAACdec/src/conceal.cpp
+        libAACdec/src/conceal.h
+        libAACdec/src/conceal_types.h
+        libAACdec/src/FDK_delay.cpp
+        libAACdec/src/FDK_delay.h
+        libAACdec/src/ldfiltbank.cpp
+        libAACdec/src/ldfiltbank.h
+        libAACdec/src/overlapadd.h
+        libAACdec/src/pulsedata.cpp
+        libAACdec/src/pulsedata.h
+        libAACdec/src/rvlc.cpp
+        libAACdec/src/rvlc.h
+        libAACdec/src/rvlc_info.h
+        libAACdec/src/rvlcbit.cpp
+        libAACdec/src/rvlcbit.h
+        libAACdec/src/rvlcconceal.cpp
+        libAACdec/src/rvlcconceal.h
+        libAACdec/src/stereo.cpp
+        libAACdec/src/stereo.h
+        libAACdec/src/usacdec_ace_d4t64.cpp
+        libAACdec/src/usacdec_ace_d4t64.h
+        libAACdec/src/usacdec_ace_ltp.cpp
+        libAACdec/src/usacdec_ace_ltp.h
+        libAACdec/src/usacdec_acelp.cpp
+        libAACdec/src/usacdec_acelp.h
+        libAACdec/src/usacdec_const.h
+        libAACdec/src/usacdec_fac.cpp
+        libAACdec/src/usacdec_fac.h
+        libAACdec/src/usacdec_lpc.cpp
+        libAACdec/src/usacdec_lpc.h
+        libAACdec/src/usacdec_lpd.cpp
+        libAACdec/src/usacdec_lpd.h
+        libAACdec/src/usacdec_rom.cpp
+        libAACdec/src/usacdec_rom.h
+        )
 
-              # Specifies the name of the NDK library that
-              # you want CMake to locate.
-              log )
+set(ArithCoding_SRC
+        libArithCoding/src/ac_arith_coder.cpp)
 
-# Specifies libraries CMake should link to your target library. You
-# can link multiple libraries, such as libraries you define in this
-# build script, prebuilt third-party libraries, or system libraries.
+set(DRCdec_SRC
+        libDRCdec/src/drcDec_gainDecoder.cpp
+        libDRCdec/src/drcDec_gainDecoder.h
+        libDRCdec/src/drcDec_reader.cpp
+        libDRCdec/src/drcDec_reader.h
+        libDRCdec/src/drcDec_rom.cpp
+        libDRCdec/src/drcDec_rom.h
+        libDRCdec/src/drcDec_selectionProcess.cpp
+        libDRCdec/src/drcDec_selectionProcess.h
+        libDRCdec/src/drcDec_tools.cpp
+        libDRCdec/src/drcDec_tools.h
+        libDRCdec/src/drcDec_types.h
+        libDRCdec/src/drcDecoder.h
+        libDRCdec/src/drcGainDec_init.cpp
+        libDRCdec/src/drcGainDec_init.h
+        libDRCdec/src/drcGainDec_preprocess.cpp
+        libDRCdec/src/drcGainDec_preprocess.h
+        libDRCdec/src/drcGainDec_process.cpp
+        libDRCdec/src/drcGainDec_process.h
+        libDRCdec/src/FDK_drcDecLib.cpp)
 
-target_link_libraries( # Specifies the target library.
-                       native-lib
+set(MpegTPDec_SRC
+        libMpegTPDec/src/tp_version.h
+        libMpegTPDec/src/tpdec_adif.cpp
+        libMpegTPDec/src/tpdec_adif.h
+        libMpegTPDec/src/tpdec_adts.cpp
+        libMpegTPDec/src/tpdec_adts.h
+        libMpegTPDec/src/tpdec_asc.cpp
+        libMpegTPDec/src/tpdec_drm.cpp
+        libMpegTPDec/src/tpdec_drm.h
+        libMpegTPDec/src/tpdec_latm.cpp
+        libMpegTPDec/src/tpdec_latm.h
+        libMpegTPDec/src/tpdec_lib.cpp)
 
-                       # Links the target library to the log library
-                       # included in the NDK.
-                       ${log-lib} )
+set(MpegTPEnc_SRC
+        libMpegTPEnc/src/tp_version.h
+        libMpegTPEnc/src/tpenc_adif.cpp
+        libMpegTPEnc/src/tpenc_adif.h
+        libMpegTPEnc/src/tpenc_adts.cpp
+        libMpegTPEnc/src/tpenc_adts.h
+        libMpegTPEnc/src/tpenc_asc.cpp
+        libMpegTPEnc/src/tpenc_asc.h
+        libMpegTPEnc/src/tpenc_latm.cpp
+        libMpegTPEnc/src/tpenc_latm.h
+        libMpegTPEnc/src/tpenc_lib.cpp)
+
+set(PCMutils_SRC
+        libPCMutils/src/limiter.cpp
+        libPCMutils/src/pcm_utils.cpp
+        libPCMutils/src/pcmdmx_lib.cpp
+        libPCMutils/src/version.h)
+
+set(SACdec_SRC
+        libSACdec/src/sac_bitdec.cpp
+        libSACdec/src/sac_bitdec.h
+        libSACdec/src/sac_calcM1andM2.cpp
+        libSACdec/src/sac_calcM1andM2.h
+        libSACdec/src/sac_dec.cpp
+        libSACdec/src/sac_dec.h
+        libSACdec/src/sac_dec_conceal.cpp
+        libSACdec/src/sac_dec_conceal.h
+        libSACdec/src/sac_dec_interface.h
+        libSACdec/src/sac_dec_lib.cpp
+        libSACdec/src/sac_dec_ssc_struct.h
+        libSACdec/src/sac_process.cpp
+        libSACdec/src/sac_process.h
+        libSACdec/src/sac_qmf.cpp
+        libSACdec/src/sac_qmf.h
+        libSACdec/src/sac_reshapeBBEnv.cpp
+        libSACdec/src/sac_reshapeBBEnv.h
+        libSACdec/src/sac_rom.cpp
+        libSACdec/src/sac_rom.h
+        libSACdec/src/sac_smoothing.cpp
+        libSACdec/src/sac_smoothing.h
+        libSACdec/src/sac_stp.cpp
+        libSACdec/src/sac_stp.h
+        libSACdec/src/sac_tsd.cpp
+        libSACdec/src/sac_tsd.h)
+
+set(SACenc_SRC
+        libSACenc/src/sacenc_bitstream.cpp
+        libSACenc/src/sacenc_bitstream.h
+        libSACenc/src/sacenc_const.h
+        libSACenc/src/sacenc_delay.cpp
+        libSACenc/src/sacenc_delay.h
+        libSACenc/src/sacenc_dmx_tdom_enh.cpp
+        libSACenc/src/sacenc_dmx_tdom_enh.h
+        libSACenc/src/sacenc_filter.cpp
+        libSACenc/src/sacenc_filter.h
+        libSACenc/src/sacenc_framewindowing.cpp
+        libSACenc/src/sacenc_framewindowing.h
+        libSACenc/src/sacenc_huff_tab.cpp
+        libSACenc/src/sacenc_huff_tab.h
+        libSACenc/src/sacenc_lib.cpp
+        libSACenc/src/sacenc_nlc_enc.cpp
+        libSACenc/src/sacenc_nlc_enc.h
+        libSACenc/src/sacenc_onsetdetect.cpp
+        libSACenc/src/sacenc_onsetdetect.h
+        libSACenc/src/sacenc_paramextract.cpp
+        libSACenc/src/sacenc_paramextract.h
+        libSACenc/src/sacenc_staticgain.cpp
+        libSACenc/src/sacenc_staticgain.h
+        libSACenc/src/sacenc_tree.cpp
+        libSACenc/src/sacenc_tree.h
+        libSACenc/src/sacenc_vectorfunctions.cpp
+        libSACenc/src/sacenc_vectorfunctions.h)
+
+set(SBRdec_SRC
+        libSBRdec/src/env_calc.cpp
+        libSBRdec/src/env_calc.h
+        libSBRdec/src/env_dec.cpp
+        libSBRdec/src/env_dec.h
+        libSBRdec/src/env_extr.cpp
+        libSBRdec/src/env_extr.h
+        libSBRdec/src/hbe.cpp
+        libSBRdec/src/hbe.h
+        libSBRdec/src/HFgen_preFlat.cpp
+        libSBRdec/src/HFgen_preFlat.h
+        libSBRdec/src/huff_dec.cpp
+        libSBRdec/src/huff_dec.h
+        libSBRdec/src/lpp_tran.cpp
+        libSBRdec/src/lpp_tran.h
+        libSBRdec/src/psbitdec.cpp
+        libSBRdec/src/psbitdec.h
+        libSBRdec/src/psdec.cpp
+        libSBRdec/src/psdec.h
+        libSBRdec/src/psdec_drm.cpp
+        libSBRdec/src/psdec_drm.h
+        libSBRdec/src/psdecrom_drm.cpp
+        libSBRdec/src/pvc_dec.cpp
+        libSBRdec/src/pvc_dec.h
+        libSBRdec/src/sbr_crc.cpp
+        libSBRdec/src/sbr_crc.h
+        libSBRdec/src/sbr_deb.cpp
+        libSBRdec/src/sbr_deb.h
+        libSBRdec/src/sbr_dec.cpp
+        libSBRdec/src/sbr_dec.h
+        libSBRdec/src/sbr_ram.cpp
+        libSBRdec/src/sbr_ram.h
+        libSBRdec/src/sbr_rom.cpp
+        libSBRdec/src/sbr_rom.h
+        libSBRdec/src/sbrdec_drc.cpp
+        libSBRdec/src/sbrdec_drc.h
+        libSBRdec/src/sbrdec_freq_sca.cpp
+        libSBRdec/src/sbrdec_freq_sca.h
+        libSBRdec/src/sbrdecoder.cpp
+        libSBRdec/src/transcendent.h)
+
+set(SBRenc_SRC
+        libSBRenc/src/bit_sbr.cpp
+        libSBRenc/src/bit_sbr.h
+        libSBRenc/src/cmondata.h
+        libSBRenc/src/code_env.cpp
+        libSBRenc/src/code_env.h
+        libSBRenc/src/env_bit.cpp
+        libSBRenc/src/env_bit.h
+        libSBRenc/src/env_est.cpp
+        libSBRenc/src/env_est.h
+        libSBRenc/src/fram_gen.cpp
+        libSBRenc/src/fram_gen.h
+        libSBRenc/src/invf_est.cpp
+        libSBRenc/src/invf_est.h
+        libSBRenc/src/mh_det.cpp
+        libSBRenc/src/mh_det.h
+        libSBRenc/src/nf_est.cpp
+        libSBRenc/src/nf_est.h
+        libSBRenc/src/ps_bitenc.cpp
+        libSBRenc/src/ps_bitenc.h
+        libSBRenc/src/ps_const.h
+        libSBRenc/src/ps_encode.cpp
+        libSBRenc/src/ps_encode.h
+        libSBRenc/src/ps_main.cpp
+        libSBRenc/src/ps_main.h
+        libSBRenc/src/resampler.cpp
+        libSBRenc/src/resampler.h
+        libSBRenc/src/sbr.h
+        libSBRenc/src/sbr_def.h
+        libSBRenc/src/sbr_encoder.cpp
+        libSBRenc/src/sbr_misc.cpp
+        libSBRenc/src/sbr_misc.h
+        libSBRenc/src/sbrenc_freq_sca.cpp
+        libSBRenc/src/sbrenc_freq_sca.h
+        libSBRenc/src/sbrenc_ram.cpp
+        libSBRenc/src/sbrenc_ram.h
+        libSBRenc/src/sbrenc_rom.cpp
+        libSBRenc/src/sbrenc_rom.h
+        libSBRenc/src/ton_corr.cpp
+        libSBRenc/src/ton_corr.h
+        libSBRenc/src/tran_det.cpp
+        libSBRenc/src/tran_det.h)
+
+set(libfdk_aac_SOURCES
+        ${AACdec_SRC} ${AACenc_SRC}
+        ${MpegTPDec_SRC} ${MpegTPEnc_SRC}
+        ${PCMutils_SRC} ${FDK_SRC}
+        ${SBRdec_SRC} ${SBRenc_SRC}
+        ${SYS_SRC}
+        ${DRCdec_SRC} ${ArithCoding_SRC}
+        ${SACdec_SRC} ${SACenc_SRC}
+        )
+
+add_library(AACdec ${AACdec_SRC})
+add_library(AACenc ${AACenc_SRC})
+add_library(FDK ${FDK_SRC})
+add_library(MpegTPDec ${MpegTPDec_SRC})
+add_library(MpegTPEnc ${MpegTPEnc_SRC})
+add_library(PCMutils ${PCMutils_SRC})
+add_library(SBRdec ${SBRdec_SRC})
+add_library(SBRenc ${SBRenc_SRC})
+add_library(SYS ${SYS_SRC})
+add_library(ArithCoding ${ArithCoding_SRC})
+add_library(DRCdec ${DRCdec_SRC})
+add_library(SACdec ${SACdec_SRC})
+add_library(SACenc ${SACenc_SRC})
+
+add_library(fdk-aac SHARED ${libfdk_aac_SOURCES})
+
+target_link_libraries( native-lib
+        fdk-aac
+        ${log-lib} )
