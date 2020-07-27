@@ -5,7 +5,7 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
-add_library( libmp3lame
+add_library( mp3lame
         SHARED
         libmp3lame/bitstream.c
         libmp3lame/encoder.c
@@ -35,4 +35,7 @@ add_library( native-lib
 
 find_library( log-lib log )
 
-target_link_libraries( native-lib libmp3lame ${log-lib} )
+target_link_libraries( native-lib
+        ${log-lib}
+        mp3lame
+        )
