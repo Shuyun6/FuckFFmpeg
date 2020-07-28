@@ -5,7 +5,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.shuyun.demolame_autoconf"
+        applicationId "com.shuyun.demolame_standalone"
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1

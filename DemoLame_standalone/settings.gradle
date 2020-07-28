@@ -1,0 +1,2 @@
+rootProject.name='DemoLame_standalone'
+include ':app'
