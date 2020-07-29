@@ -7,9 +7,9 @@ cmake_minimum_required(VERSION 3.4.1)
 
 include_directories(src/main/cpp/include/fdk-aac/)
 
-add_library(fdk-aac SHARED IMPORTED)
+add_library(fdk-aac STATIC IMPORTED)
 set_target_properties(fdk-aac PROPERTIES IMPORTED_LOCATION
-        ${PROJECT_SOURCE_DIR}/../jniLibs/${ANDROID_ABI}/libfdk-aac.so)
+        ${PROJECT_SOURCE_DIR}/../jniLibs/${ANDROID_ABI}/libfdk-aac.a)
 
 add_library( native-lib SHARED native-lib.cpp )
 
