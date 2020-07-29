@@ -2,7 +2,7 @@
 NDK_ROOT=/home/shuyun/dev/android-ndk-r21d
 TOOLCHAIN=$NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64
 
-export CFLAGS="-fPIC"
+export CFLAGS="-fPIC -mfloat-abi=softfp -mfpu=vfp -ffast-math -O2"
 export LDFLAGS=""
 export CPPFLAGS="$CFLAGS"
 export CFLAGS="$CFLAGS"
