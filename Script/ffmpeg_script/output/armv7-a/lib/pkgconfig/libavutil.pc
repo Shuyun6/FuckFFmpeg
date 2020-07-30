@@ -1,0 +1,14 @@
+prefix=/home/shuyun/dev/output/armv7-a
+exec_prefix=${prefix}
+libdir=/home/shuyun/dev/output/armv7-a/lib
+includedir=/home/shuyun/dev/output/armv7-a/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 56.57.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil 
+Libs.private: -pthread -lm
+Cflags: -I${includedir}
