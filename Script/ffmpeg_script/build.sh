@@ -2,7 +2,7 @@
 set -x
 API=24
 CPU=armv7-a
-OUTPUT=home/shuyun/dev/output/$CPU
+OUTPUT=/home/shuyun/dev/output/$CPU
 NDK=/home/shuyun/dev/android-ndk-r21d
 TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64
 SYSROOT=$TOOLCHAIN/sysroot
