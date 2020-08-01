@@ -7,7 +7,6 @@ NDK=/home/shuyun/dev/android-ndk-r21d
 TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64
 SYSROOT=$TOOLCHAIN/sysroot
 CONFIGURE_FLAGS=
---disable-static \
 --enable-shared \
 --disable-stripping \
 --disable-ffmpeg \
@@ -71,6 +70,7 @@ function build
   ./configure \
   $CONFIGURE_FLAGS \
   --prefix=$OUTPUT \
+  --enable-shared \
   --target-os=android \
   --arch=arm \
   --cpu=armv7-a \
