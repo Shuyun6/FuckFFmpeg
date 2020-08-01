@@ -70,6 +70,7 @@ function build
   ./configure \
   $CONFIGURE_FLAGS \
   --prefix=$OUTPUT \
+  --enable-shared \
   --target-os=android \
   --arch=arm \
   --cpu=armv7-a \
