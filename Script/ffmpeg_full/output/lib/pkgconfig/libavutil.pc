@@ -1,0 +1,14 @@
+prefix=/home/shuyun/dev/output
+exec_prefix=${prefix}
+libdir=/home/shuyun/dev/output/lib
+includedir=/home/shuyun/dev/output/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 56.57.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil 
+Libs.private: -pthread -lm
+Cflags: -I${includedir}

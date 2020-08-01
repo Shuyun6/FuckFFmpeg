@@ -1,0 +1,14 @@
+prefix=/home/shuyun/dev/output
+exec_prefix=${prefix}
+libdir=/home/shuyun/dev/output/lib
+includedir=/home/shuyun/dev/output/include
+
+Name: libswscale
+Description: FFmpeg image rescaling library
+Version: 5.8.100
+Requires: 
+Requires.private: libavutil >= 56.57.100
+Conflicts:
+Libs: -L${libdir}  -lswscale 
+Libs.private: -lm
+Cflags: -I${includedir}
